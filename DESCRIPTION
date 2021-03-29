@@ -1,0 +1,32 @@
+Package: TokyoCovidMonitor
+Title: An RStan-based package for monitoring COVID-19 cases in Tokyo
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Takashi J",
+           family = "Ozaki",
+           role = c("aut", "cre"),
+           email = "ozt.situ@gmail.com",
+           )
+Description: Fitting a Baysian structure time series model to daily COVID-19 positive cases of Tokyo, for monitoring
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Biarch: true
+Depends: 
+    R (>= 3.4.0)
+Imports: 
+    methods,
+    Rcpp (>= 0.12.0),
+    RcppParallel (>= 5.0.1),
+    rstan (>= 2.18.1),
+    rstantools (>= 2.1.1)
+LinkingTo: 
+    BH (>= 1.66.0),
+    Rcpp (>= 0.12.0),
+    RcppEigen (>= 0.3.3.3.0),
+    RcppParallel (>= 5.0.1),
+    rstan (>= 2.18.1),
+    StanHeaders (>= 2.18.0)
+SystemRequirements: GNU make
