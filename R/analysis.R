@@ -200,6 +200,14 @@ plotGens <- function(out = NULL, saveFile = F){
     da2.tmp1 <- dplyr::group_by(da1, day, age)
     da2.tmp2 <- dplyr::summarise(da2.tmp1, sum(num))
     da2 <- as.data.frame(da2.tmp2)
+
+    # Set up a consecutive date vector
+    dayseq <- seq(from = as.Date(da2$day[1], origin = '1970-01-01'),
+                  to = as.Date(da2$day[nrow(da2)], origin = '1970-01-01'),
+                  by = 'day')
+    dayseq <- as.data.frame(dayseq)
+    names(dayseq) <- 'day'
+
     da3 <- dplyr::left_join(dayseq, da2, by = 'day')
     names(da3)[3] <- 'num'
     da3[which(is.na(da3$num)), 3] <- 0
@@ -250,8 +258,8 @@ plotGens <- function(out = NULL, saveFile = F){
 #' @export
 #'
 #' @examples
-#' textOutputs(val, 100)
-textOutputs <- function(val, num){
+#' textOutput(val, 100)
+textOutput <- function(val, num){
   # Obtain variables
   trend <- val$trend
   season <- val$season
