@@ -27,3 +27,10 @@ out <- stanBstsFit(100)
 val <- fitValue(out)
 plotOutput(val, out)
 ```
+
+If you want to see the past model on such as 2021-01-01, run as below.
+```
+out <- stanBstsFit(lastday = "2021-01-01")
+```
+
+We would be happy if you send any feedback or comment via issues.

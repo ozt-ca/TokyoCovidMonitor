@@ -284,7 +284,7 @@ textOutputs <- function(val, num){
 
   sentence2 <- paste0("2020年11月1日以降の年代別推移")
   sentence3 <- paste0("東京都の医療リソースの残り容量に関する各指標は画像の通り")
-  sentence4 <- paste0("使用したRコード・Stanコードは以下の通り https://github.com/ozt-ca/tjo.hatenablog.samples/blob/master/r_samples/public_lib/jp/R/covid19_fit_tokyo_bayes_ts_2nd_diff_trend.R https://github.com/ozt-ca/tjo.hatenablog.samples/blob/master/r_samples/public_lib/jp/R/covid19_tokyo_2nd_trend.stan")
+  sentence4 <- paste0("使用した自作Rパッケージはこちら https://github.com/ozt-ca/TokyoCovidMonitor")
   print(sentence1)
   print(sentence2)
   print(sentence3)
