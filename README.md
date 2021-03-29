@@ -11,11 +11,13 @@ Currently, Tokyo metropolitan government announces the number of COVID-19 positi
 
 ## Installation
 
-Just run as below. This package is not public on CRAN.
+Just run as below. This package won't be available on CRAN.
 
 ```
 devtools::install_github('ozt-ca/TokyoCovidMonitor')
 ```
+
+For some reasons, we have only checked Mac OS environment. It may not work on Windows / Linux / Chrome OS.
 
 ## Walk through
 
