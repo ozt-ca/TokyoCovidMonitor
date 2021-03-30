@@ -25,7 +25,7 @@ Please just run as below. This package won't be available on CRAN.
 devtools::install_github('ozt-ca/TokyoCovidMonitor')
 ```
 
-We highly recommend to install `rstan` and related packages in advance, in order to avoid potential errors (e.g. errors related to `Rcpp`) or conflicts.
+We highly recommend to install `rstan` and related packages in advance, in order to identify and avoid potential errors (e.g. errors related to `Rcpp`) or conflicts.
 
 For some reasons, we have only checked Mac OS environment. It may not work on Windows / Linux / Chrome OS.
 
