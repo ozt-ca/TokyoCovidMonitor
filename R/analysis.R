@@ -161,21 +161,21 @@ plotOutput <- function(val, out, saveFile = F){
 
   # Plot for JPG files
   if(saveFile){
-    jpeg(filename = 'covid19_fit_summary.jpg', width = 720, height = 540)
+    jpeg(filename = 'covid19_fit_summary.jpg', width = 1600, height = 1200)
     matplot(cbind(y, pred, cumsum(trend)),
-            type = 'l', lty = c(1, 3, 1), lwd = c(1, 2, 3), col = c(1, 2, 4),
-            ylab = '', main = mtitle)
+            type = 'l', lty = c(1, 3, 1), lwd = 2 * c(1, 2, 3), col = c(1, 2, 4),
+            ylab = '', main = mtitle, cex.main = 3, cex.axis = 2)
     legend('topleft',
            legend = c('Reported', '2nd-diff Trend + Seasonality', '2nd-diff Trend'),
-           lty = c(1, 3, 1), lwd = c(1, 2, 3), col = c(1, 2, 4), cex = 1.5)
+           lty = c(1, 3, 1), lwd = 2 * c(1, 2, 3), col = c(1, 2, 4), cex = 3)
     dev.off()
 
-    jpeg(filename = 'covid19_fit_trend.jpg', width = 720, height = 540)
-    plot(trend, type = 'l', lwd = 2)
+    jpeg(filename = 'covid19_fit_trend.jpg', width = 1600, height = 1200)
+    plot(trend, type = 'l', lwd = 4, cex.axis = 2)
     dev.off()
 
-    jpeg(filename = 'covid19_fit_season.jpg', width = 720, height = 540)
-    plot(season, type = 'l', lwd = 2)
+    jpeg(filename = 'covid19_fit_season.jpg', width = 1600, height = 1200)
+    plot(season, type = 'l', lwd = 4, cex.axis = 2)
     dev.off()
   }
 }
@@ -215,7 +215,7 @@ plotGens <- function(out = NULL, saveFile = F){
   } else {
     da4 <- out$gen.df
   }
-  
+
   dayseq2 <- unique(da4$day)
   dayseq2 <- as.data.frame(dayseq2)
   names(dayseq2) <- 'day'
@@ -245,7 +245,8 @@ plotGens <- function(out = NULL, saveFile = F){
          col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
 
   if(saveFile){
-    jpeg(filename = 'covid19_fit_generation.jpg', width = 720, height = 540)
+    jpeg(filename = 'covid19_fit_generation.jpg',
+         width = 1600, height = 1200)
     matplot(cbind(dtmp_u10s[, 3],
                   da4[da4$age == '10代', 3],
                   da4[da4$age == '20代', 3],
@@ -256,12 +257,12 @@ plotGens <- function(out = NULL, saveFile = F){
                   da4[da4$age == '70代', 3],
                   da4[da4$age == '80代', 3]),
             type = 'l', lty = 1, xlab = '', ylab = '',
-            main = gtitle,
+            main = gtitle, cex.main = 3, cex.axis = 2, lwd = 2,
             col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
     legend('topleft',
            legend = c('u10s', '10s', '20s', '30s', '40s', '50s',
                       '60s', '70s', '80s'),
-           lty = 1, ncol = 2,
+           lty = 1, ncol = 2, cex = 2, lwd = 2,
            col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
     dev.off()
   }
