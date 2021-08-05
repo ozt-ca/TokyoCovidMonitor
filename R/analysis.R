@@ -215,10 +215,20 @@ plotGens <- function(out = NULL, saveFile = F){
   } else {
     da4 <- out$gen.df
   }
+  
+  dayseq2 <- unique(da4$day)
+  dayseq2 <- as.data.frame(dayseq2)
+  names(dayseq2) <- 'day'
+  da4_u10s <- da4[da4$age == '10歳未満', ]
+  dtmp_u10s <- dplyr::left_join(dayseq2, da4_u10s, by = 'day')
+  names(dtmp_u10s)[3] <- 'num'
+  dtmp_u10s[which(is.na(dtmp_u10s$num)), 3] <- 0
 
   gtitle <- paste0('Tokyo, daily from ',
                    da4$day[1], ' to ', da4$day[nrow(da4)], ' by generations')
-  matplot(cbind(da4[da4$age == '20代', 3],
+  matplot(cbind(dtmp_u10s[, 3],
+                da4[da4$age == '10代', 3],
+    　　　　　　da4[da4$age == '20代', 3],
                 da4[da4$age == '30代', 3],
                 da4[da4$age == '40代', 3],
                 da4[da4$age == '50代', 3],
@@ -226,14 +236,19 @@ plotGens <- function(out = NULL, saveFile = F){
                 da4[da4$age == '70代', 3],
                 da4[da4$age == '80代', 3]),
           type = 'l', lty = 1, xlab = '', ylab = '',
-          main = gtitle)
+          main = gtitle,
+          col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
   legend('topleft',
-         legend = c('20s', '30s', '40s', '50s', '60s', '70s', '80s'),
-         lty = 1, col = c(1, 2, 3, 4, 5, 6, 7), ncol = 2)
+         legend = c('u10s', '10s', '20s', '30s', '40s', '50s',
+                    '60s', '70s', '80s'),
+         lty = 1, ncol = 2,
+         col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
 
   if(saveFile){
     jpeg(filename = 'covid19_fit_generation.jpg', width = 720, height = 540)
-    matplot(cbind(da4[da4$age == '20代', 3],
+    matplot(cbind(dtmp_u10s[, 3],
+                  da4[da4$age == '10代', 3],
+                  da4[da4$age == '20代', 3],
                   da4[da4$age == '30代', 3],
                   da4[da4$age == '40代', 3],
                   da4[da4$age == '50代', 3],
@@ -241,10 +256,13 @@ plotGens <- function(out = NULL, saveFile = F){
                   da4[da4$age == '70代', 3],
                   da4[da4$age == '80代', 3]),
             type = 'l', lty = 1, xlab = '', ylab = '',
-            main = gtitle)
+            main = gtitle,
+            col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
     legend('topleft',
-           legend = c('20s', '30s', '40s', '50s', '60s', '70s', '80s'),
-           lty = 1, col = c(1, 2, 3, 4, 5, 6, 7), ncol = 2)
+           legend = c('u10s', '10s', '20s', '30s', '40s', '50s',
+                      '60s', '70s', '80s'),
+           lty = 1, ncol = 2,
+           col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
     dev.off()
   }
 }
