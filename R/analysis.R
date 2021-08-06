@@ -80,6 +80,7 @@ stanBstsFit <- function(num = NULL, lastday = NULL){
   out$df <- d4
   out$fit <- fit
   out$gen.df <- da4
+  out$dayseq <- dayseq
   return(out)
 }
 
@@ -149,33 +150,45 @@ plotOutput <- function(val, out, saveFile = F){
   pred <- val$fitted
   trend <- val$trend
   season <- val$season
+  dayseq <- out$dayseq
+
   # Plot
+  bin <- floor(nrow(dayseq) / 9)
+  xval <- seq(1, bin * 9 + 1, by = bin)
+  xstr <- as.character(dayseq$day[xval])
+
   matplot(cbind(y, pred, cumsum(trend)),
           type = 'l', lty = c(1, 3, 1), lwd = c(1, 2, 3), col = c(1, 2, 4),
-          ylab = '', main = mtitle)
+          ylab = '', main = mtitle, xaxt = 'n')
   legend('topleft',
          legend = c('Reported', '2nd-diff Trend + Seasonality', '2nd-diff Trend'),
          lty = c(1, 3, 1), lwd = c(1, 2, 3), col = c(1, 2, 4))
-  plot(trend, type = 'l', lwd = 2)
-  plot(season, type = 'l', lwd = 2)
+  axis(side = 1, at = xval, labels = xstr)
+  plot(trend, type = 'l', lwd = 2, xaxt = 'n')
+  axis(side = 1, at = xval, labels = xstr)
+  plot(season, type = 'l', lwd = 2, xaxt = 'n')
+  axis(side = 1, at = xval, labels = xstr)
 
   # Plot for JPG files
   if(saveFile){
-    jpeg(filename = 'covid19_fit_summary.jpg', width = 1600, height = 1200)
+    jpeg(filename = 'covid19_fit_summary.jpg', width = 2000, height = 1200)
     matplot(cbind(y, pred, cumsum(trend)),
             type = 'l', lty = c(1, 3, 1), lwd = 2 * c(1, 2, 3), col = c(1, 2, 4),
-            ylab = '', main = mtitle, cex.main = 3, cex.axis = 2)
+            ylab = '', main = mtitle, cex.main = 4, cex.axis = 3, xaxt = 'n')
     legend('topleft',
            legend = c('Reported', '2nd-diff Trend + Seasonality', '2nd-diff Trend'),
            lty = c(1, 3, 1), lwd = 2 * c(1, 2, 3), col = c(1, 2, 4), cex = 3)
+    axis(side = 1, at = xval, labels = xstr, cex.axis = 2)
     dev.off()
 
-    jpeg(filename = 'covid19_fit_trend.jpg', width = 1600, height = 1200)
-    plot(trend, type = 'l', lwd = 4, cex.axis = 2)
+    jpeg(filename = 'covid19_fit_trend.jpg', width = 2000, height = 1200)
+    plot(trend, type = 'l', lwd = 4, cex.axis = 3, xaxt = 'n')
+    axis(side = 1, at = xval, labels = xstr, cex.axis = 2)
     dev.off()
 
-    jpeg(filename = 'covid19_fit_season.jpg', width = 1600, height = 1200)
-    plot(season, type = 'l', lwd = 4, cex.axis = 2)
+    jpeg(filename = 'covid19_fit_season.jpg', width = 2000, height = 1200)
+    plot(season, type = 'l', lwd = 4, cex.axis = 3, xaxt = 'n')
+    axis(side = 1, at = xval, labels = xstr, cex.axis = 2)
     dev.off()
   }
 }
@@ -224,6 +237,10 @@ plotGens <- function(out = NULL, saveFile = F){
   names(dtmp_u10s)[3] <- 'num'
   dtmp_u10s[which(is.na(dtmp_u10s$num)), 3] <- 0
 
+  bin <- floor(nrow(dayseq2) / 9)
+  xval <- seq(1, bin * 9 + 1, by = bin)
+  xstr <- as.character(dayseq2$day[xval])
+
   gtitle <- paste0('Tokyo, daily from ',
                    da4$day[1], ' to ', da4$day[nrow(da4)], ' by generations')
   matplot(cbind(dtmp_u10s[, 3],
@@ -237,16 +254,18 @@ plotGens <- function(out = NULL, saveFile = F){
                 da4[da4$age == '80代', 3]),
           type = 'l', lty = 1, xlab = '', ylab = '',
           main = gtitle,
-          col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
+          col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'),
+          xaxt = 'n')
   legend('topleft',
          legend = c('u10s', '10s', '20s', '30s', '40s', '50s',
                     '60s', '70s', '80s'),
          lty = 1, ncol = 2,
          col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
+  axis(side = 1, at = xval, labels = xstr)
 
   if(saveFile){
     jpeg(filename = 'covid19_fit_generation.jpg',
-         width = 1600, height = 1200)
+         width = 2000, height = 1200)
     matplot(cbind(dtmp_u10s[, 3],
                   da4[da4$age == '10代', 3],
                   da4[da4$age == '20代', 3],
@@ -257,13 +276,15 @@ plotGens <- function(out = NULL, saveFile = F){
                   da4[da4$age == '70代', 3],
                   da4[da4$age == '80代', 3]),
             type = 'l', lty = 1, xlab = '', ylab = '',
-            main = gtitle, cex.main = 3, cex.axis = 2, lwd = 2,
-            col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
+            main = gtitle, cex.main = 4, cex.axis = 2, lwd = 2,
+            col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'),
+            xaxt = 'n')
     legend('topleft',
            legend = c('u10s', '10s', '20s', '30s', '40s', '50s',
                       '60s', '70s', '80s'),
-           lty = 1, ncol = 2, cex = 2, lwd = 2,
+           lty = 1, ncol = 2, cex = 2.5, lwd = 2,
            col = c('#a00000', '#a0a000', 1, 2, 3, 4, 5, 6, '#a0a0a0'))
+    axis(side = 1, at = xval, labels = xstr, cex.axis = 2)
     dev.off()
   }
 }
