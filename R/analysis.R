@@ -164,7 +164,8 @@ plotOutput <- function(val, out, saveFile = F){
          legend = c('Reported', '2nd-diff Trend + Seasonality', '2nd-diff Trend'),
          lty = c(1, 3, 1), lwd = c(1, 2, 3), col = c(1, 2, 4))
   axis(side = 1, at = xval, labels = xstr)
-  plot(trend, type = 'l', lwd = 2, xaxt = 'n')
+  plot(trend, type = 'l', lwd = 2, xaxt = 'n',
+       main = 'Raw trend (acceleration rate)')
   axis(side = 1, at = xval, labels = xstr)
   plot(season, type = 'l', lwd = 2, xaxt = 'n')
   axis(side = 1, at = xval, labels = xstr)
@@ -182,7 +183,8 @@ plotOutput <- function(val, out, saveFile = F){
     dev.off()
 
     jpeg(filename = 'covid19_fit_trend.jpg', width = 2000, height = 1200)
-    plot(trend, type = 'l', lwd = 4, cex.axis = 3, xaxt = 'n')
+    plot(trend, type = 'l', lwd = 4, cex.axis = 3, xaxt = 'n',
+         main = 'Raw trend (acceleration rate)', cex.main = 4)
     axis(side = 1, at = xval, labels = xstr, cex.axis = 2)
     dev.off()
 
@@ -320,7 +322,7 @@ textOutput <- function(val, num){
                       signif(rev(season)[2], 3), ", ",
                       signif(rev(season)[1], 3),
                       "、",
-                      "トレンドの直近3日間の差分値は",
+                      "直近3日間の「加速度」は",
                       signif(rev(trend)[3], 3), ", ",
                       signif(rev(trend)[2], 3), ", ",
                       signif(rev(trend)[1], 3), "。"
