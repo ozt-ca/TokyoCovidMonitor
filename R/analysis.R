@@ -306,11 +306,7 @@ textOutput <- function(val, num){
   # Set up a description for reporting on Twitter
   ctrend <- cumsum(trend)
   sentence1 <- paste0("本日の東京都の報告数は", num, "名、",
-                      "二階差分トレンドの直近7日間の推定値は",
-                      signif(rev(ctrend)[7], 3), ", ",
-                      signif(rev(ctrend)[6], 3), ", ",
-                      signif(rev(ctrend)[5], 3), ", ",
-                      signif(rev(ctrend)[4], 3), ", ",
+                      "二階差分トレンドの直近3日間の推定値は",
                       signif(rev(ctrend)[3], 3), ", ",
                       signif(rev(ctrend)[2], 3), ", ",
                       signif(rev(ctrend)[1], 3),
